@@ -144,54 +144,233 @@ $$
 
 # Выполнение лабораторной работы
 
-1. Установим пакет в Julia необходимый для построения графиков (Plots) и работы с дифференциальными уравнениями (DifferentialEquations). (рис. @fig:001)
+1. Начнем выполнения поставленных задач в Julia. Для этого запустим Pluto [@pluto-jl]. (рис. @fig:001)
 
-![Julia. Добавление пакетов](image/01.png){#fig:001 width=86%}
+![Julia. Запуск Pluto](image/01.png){#fig:001 width=86%}
 
-2. Напишем скрипт для моделирования боевых действий между регулярными войсками. Первым делом подкючим пакеты "Plots" [@docs-plots] и "DifferentialEquations" [@docs-de], далее объявим начальные данные при помощи констант. После чего используя DifferentialEquations составим и решим систему однородных дифференциальных уравнений. В конце используем Plots для того чтобы построить модель. (рис. @fig:002, @fig:003)
+2. Первым делом подкючим пакеты "Plots" [@docs-plots] и "DifferentialEquations" [@docs-de]. Далее объявим начальные данные при помощи констант. Также объявим начальное условие для системы ДУ и промежуток времени, на котором будет проходить моделирование. (рис. @fig:002)
 
 ```Julia
 # подключение пакетов
 using Plots
 using DifferentialEquations
 
-# начальные данные
-const X = 44200
-const Y = 54200
-const a = 0.312
-const b = 0.456
-const c = 0.256
-const h = 0.340
-const P(t) = sin.(t + 3)
-const Q(t) = cos.(t + 7)
-const t_start = 0
-const t_end = 2.16
+# входные данные
+const startT = 0
+const endT = 33
+const stepT = 0.05
+const x0 = 1.3
+const y0 = 0.3
+
+# начальные условия
+u0 = [x0, y0]
+# промежуток времени
+spanT = (startT, endT)
+```
+
+![Julia. Начало написания скрипта для моделирование колебания гармонического осциллятора](image/02.png){#fig:002 width=86%}
+
+3. В следующей ячейке Pluto построим фазовый портрет и решение уравнения гармонического осциллятора. Для этого оъявим параметры осциллятора, а кокретно частоту. Также по аналогии с прошлой лабораторной работой при помощи 'DifferentialEquations' зададим и решим систему ДУ, после чего построим график ее решения. Так же создадим два списка, в которых будут храниться точки уравнений. Воспользуемся данным списком, чтобы построить фазовый портрет. (рис. @fig:003, @fig:004, @fig:005)
+
+```Julia
+w = 3.3
 
 # используем DifferentialEquations,
 # чтобы описать и решить систему ОДУ
-function Battle!(df, u, p, t)
-    df[1] = -a * u[1] - b * u[2] + P(t);
-    df[2] = -c * u[1] - h * u[2] + Q(t);
+function Fluctuations!(df, u, p, t)
+  df[1] = u[2]
+  df[2] = -w * u[1]
 end
-u0 = [X, Y]
-tspan = (t_start, t_end)
-prob = ODEProblem(Battle!, u0, tspan)
-sol = solve(prob)
+
+prob = ODEProblem(Fluctuations!, u0, spanT)
+sol = solve(prob, dtmax=stepT)
+
+X = [u[1] for u in sol.u]
+Y = [u[2] for u in sol.u]
 
 # используем Plots,
-# чтобы построить график решения
-plt = plot(sol,
-          title="Модель боевых действий №1",
-          dpi=500,
-          label=["Армия №1" "Армия №2"],
-          xlabel="Время (s)",
-          ylabel="Численность")
-savefig(plt, "artifacts/lab03-1_JL.png")
+# чтобы построить график решения уравнения
+plt01 = plot(sol,
+      dpi=500,
+      xlabel="Время (s)",
+      ylabel="x, y",
+      legend=false)
+savefig(plt01, "artifacts/JL.lab04-010.png")
+
+# используем Plots,
+# чтобы построить фазовый портрет
+plt02 = plot(X, Y,
+      dpi=500,
+      xlabel="x",
+      ylabel="y",
+      legend=false)
+savefig(plt02, "artifacts/JL.lab04-011.png")
+
+println("Success!")
 ```
 
-![Julia. Cкрипт для моделирования боевых действий между регулярными войсками (1)](image/02.png){#fig:002 width=86%}
+![Julia. Скрипт. Колебания гармонического осциллятора без затуханий и без действий внешней силы](image/03.png){#fig:003 width=86%}
 
-![Julia. Cкрипт для моделирования боевых действий между регулярными войсками (2)](image/03.png){#fig:003 width=86%}
+![Julia. Модель. Решение уравнения гармонического осциллятора без затуханий и без действий внешней силы](image/JL.lab04-010.png){#fig:004 width=86%}
+
+![Julia. Модель. Фазовый портрет осциллятора без затуханий и без действий внешней силы](image/JL.lab04-011.png){#fig:005 width=86%}
+
+4. Доработаем данный скрипт, чтобы построить решение уравнения и фазовый портрет гармонического осциллятора c затуханием и без действий внешней силы. Для этого нам неободимо добавить новый параметр - затухание. Также необходимо изменить функцию системы ДУ. (рис. @fig:006, @fig:007, @fig:008)
+
+```Julia
+w = 0.3 #!
+g = 3 #!
+
+function Fluctuations!(df, u, p, t)
+  df[1] = u[2]
+  df[2] = -w * u[1] - g * u[2] #!
+end
+
+prob = ODEProblem(Fluctuations!, u0, spanT)
+sol = solve(prob, dtmax=stepT)
+
+X = [u[1] for u in sol.u]
+Y = [u[2] for u in sol.u]
+
+plt01 = plot(sol,
+      dpi=500,
+      xlabel="Время (s)",
+      ylabel="x, y",
+      legend=false)
+savefig(plt01, "artifacts/JL.lab04-020.png")
+
+plt02 = plot(X, Y,
+      dpi=500,
+      xlabel="x",
+      ylabel="y",
+      legend=false)
+savefig(plt02, "artifacts/JL.lab04-021.png")
+
+println("Success!")
+```
+
+![Julia. Скрипт. Колебания гармонического осциллятора с затуханием и без действий внешней силы](image/04.png){#fig:006 width=86%}
+
+![Julia. Модель. Решение уравнения гармонического осциллятора с затуханием и без действий внешней силы](image/JL.lab04-020.png){#fig:007 width=86%}
+
+![Julia. Модель. Фазовый портрет осциллятора с затуханием и без действий внешней силы](image/JL.lab04-021.png){#fig:008 width=86%}
+
+5. Еще раз доработаем скрипт, чтобы построить решение уравнения и фазовый портрет гармонического осциллятора c затуханием и под действием внешней силы. Для этого нам неободимо добавить новый параметр - функция внешней силы. Также необходимо изменить функцию системы ДУ. (рис. @fig:009, @fig:010, @fig:011)
+
+```Julia
+w = 3 #!
+g = 3.3 #!
+f(t) = 3.3 * sin.(3 * t) #!
+
+function Fluctuations!(df, u, p, t)
+  df[1] = u[2]
+  df[2] = -w * u[1] - g * u[2] - f(t) #!
+end
+
+prob = ODEProblem(Fluctuations!, u0, spanT)
+sol = solve(prob, dtmax=stepT)
+
+X = [u[1] for u in sol.u]
+Y = [u[2] for u in sol.u]
+
+plt01 = plot(sol,
+      dpi=500,
+      xlabel="Время (s)",
+      ylabel="x, y",
+      legend=false)
+savefig(plt01, "artifacts/JL.lab04-030.png")
+
+plt02 = plot(X, Y,
+      dpi=500,
+      xlabel="x",
+      ylabel="y",
+      legend=false)
+savefig(plt02, "artifacts/JL.lab04-031.png")
+
+println("Success!")
+```
+
+![Julia. Скрипт. Колебания гармонического осциллятора с затуханием и под действием внешней силы](image/05.png){#fig:009 width=86%}
+
+![Julia. Модель. Решение уравнения гармонического осциллятора с затуханием и под действием внешней силы](image/JL.lab04-030.png){#fig:010 width=86%}
+
+![Julia. Модель. Фазовый портрет осциллятора с затуханием и под действием внешней силы](image/JL.lab04-031.png){#fig:011 width=86%}
+
+6. Построим модель колебания гармонического осциллятора без затуханий и без действий внешней силы на Modelica. (рис. @fig:012, @fig:013, @fig:014)
+
+```modelica
+model lab04_01
+    constant Real w = 3.3;
+    Real x;
+    Real y;
+    Real t = time;
+initial equation
+    x = 1.3;
+    y = 0.3;
+equation
+  der(x) = y;
+  der(y) = -w * x;
+  annotation(experiment(StartTime = 0, StopTime = 33, Interval = 0.05));
+end lab04_01;
+```
+
+![Modelica. Скрипт. Колебания гармонического осциллятора без затуханий и без действий внешней силы](image/06.png){#fig:012 width=86%}
+
+![Modelica. Модель. Решение уравнения гармонического осциллятора без затуханий и без действий внешней силы](image/MO.lab04-010.png){#fig:013 width=86%}
+
+![Modelica. Модель. Фазовый портрет осциллятора без затуханий и без действий внешней силы](image/MO.lab04-011.png){#fig:014 width=86%}
+
+7. Построим модель колебания гармонического осциллятора с затуханием и без действий внешней силы на Modelica. (рис. @fig:015, @fig:016, @fig:017)
+
+```modelica
+model lab04_02
+    constant Real w = 0.3;
+    constant Real g = 3;
+    Real x;
+    Real y;
+    Real t = time;
+initial equation
+    x = 1.3;
+    y = 0.3;
+equation
+  der(x) = y;
+  der(y) = -w * x - g * y;
+  annotation(experiment(StartTime = 0, StopTime = 33, Interval = 0.05));
+end lab04_02;
+
+```
+
+![Modelica. Скрипт. Колебания гармонического осциллятора с затуханием и без действий внешней силы](image/07.png){#fig:015 width=86%}
+
+![Modelica. Модель. Решение уравнения гармонического осциллятора с затуханием и без действий внешней силы](image/MO.lab04-020.png){#fig:016 width=86%}
+
+![Modelica. Модель. Фазовый портрет осциллятора с затуханием и без действий внешней силы](image/MO.lab04-021.png){#fig:017 width=86%}
+
+8. Построим модель колебания гармонического осциллятора с затуханием и под действием внешней силы на Modelica. (рис. @fig:018, @fig:019, @fig:020)
+
+```modelica
+model lab04_02
+    constant Real w = 0.3;
+    constant Real g = 3;
+    Real x;
+    Real y;
+    Real t = time;
+initial equation
+    x = 1.3;
+    y = 0.3;
+equation
+  der(x) = y;
+  der(y) = -w * x - g * y;
+  annotation(experiment(StartTime = 0, StopTime = 33, Interval = 0.05));
+end lab04_02;
+
+```
+
+![Modelica. Скрипт. Колебания гармонического осциллятора с затуханием и под действием внешней силы](image/08.png){#fig:018 width=86%}
+
+![Modelica. Модель. Решение уравнения гармонического осциллятора с затуханием и под действием внешней силы](image/MO.lab04-030.png){#fig:019 width=86%}
+
+![Modelica. Модель. Фазовый портрет осциллятора с затуханием и без под действием внешней силы](image/MO.lab04-031.png){#fig:020 width=86%}
 
 # Анализ результатов
 
@@ -201,7 +380,7 @@ savefig(plt, "artifacts/lab03-1_JL.png")
 
 # Выводы
 
-Мы улучшили практические навыки в области дифференциальных уравнений, улучшили навыки моделирования на Julia, также приобрели навыки моделирования на OpenModelica. Изучили модель гармонических колебаний.
+Мы улучшили практические навыки в области дифференциальных уравнений, улучшили навыки моделирования на Julia, также приобрели навыки моделирования на OpenModelica. Изучили модель rолебания гармонического осциллятора. Научились строить фазовые портреты.
 
 # Список литературы{.unnumbered}
 
