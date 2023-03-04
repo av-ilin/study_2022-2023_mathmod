@@ -4,86 +4,131 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ da93b7f0-ba99-11ed-10bc-cb991e65b30b
-begin
-	using Plots
-	using DifferentialEquations
-end
+# ╔═╡ a93500ac-d1c3-4a6d-b45c-71bdfb9798f3
+using Plots
 
-# ╔═╡ 30e58007-626a-4b41-9927-d43e3015d722
+# ╔═╡ 6bfebebb-d9be-48aa-b8c0-0dfbc7e20689
+using DifferentialEquations
+
+# ╔═╡ e6c105f0-698e-4f46-afae-821086479a2e
 begin
-	const startT = 0.3
+	const startT = 0
 	const endT = 33
 	const stepT = 0.05
 	const x0 = 1.3
 	const y0 = 0.3
 end
 
-# ╔═╡ 987a2499-55ac-4a62-8210-fe6c17fda87c
-begin 
+# ╔═╡ e07b089a-56ab-4025-9578-0dc293ce3872
+begin
 	u0 = [x0, y0]
 	spanT = (startT, endT)
 end
 
-# ╔═╡ e7611d43-3d4e-4b8c-97c6-7c8e038d1750
-begin
+# ╔═╡ 1f20f675-2c90-467f-b122-0b193710e3bc
+# ╠═╡ disabled = true
+#=╠═╡
+begin 
 	w = 3.3
+
 	function Fluctuations01!(df, u, p, t)
-	    df[1] = u[2]
-	    df[2] = -w * u[1]
+		df[1] = u[2]
+		df[2] = -w * u[1]
 	end
 
 	prob = ODEProblem(Fluctuations01!, u0, spanT)
 	sol = solve(prob, dtmax=stepT)
-end
 
-# ╔═╡ a12a2350-6478-4b41-b55d-e942bf0f1442
-plot(sol,
-	dpi=500,
-	xlabel="Время (s)",
-	ylabel="x, y",
-	legend=false)
-
-# ╔═╡ f162ba9c-7ca1-46bb-b504-b4b35b045b8c
-begin
 	X = [u[1] for u in sol.u]
 	Y = [u[2] for u in sol.u]
-	plot(X, Y,
-		dpi=500,
-		xlabel="x",
-		ylabel="y",
-		legend=false)
+
+	plt01 = plot(sol, 
+				dpi=500,
+				xlabel="Время (s)", 
+				ylabel="x, y", 
+				legend=false)
+	savefig(plt01, "artifacts/JL.lab04-010.png")
+
+	plt02 = plot(X, Y, 
+				dpi=500,
+				xlabel="x", 
+				ylabel="y", 
+				legend=false)
+	savefig(plt02, "artifacts/JL.lab04-011.png")
+
+	println("Success!")
+end
+  ╠═╡ =#
+
+# ╔═╡ cc38a72f-23da-4299-80df-d1444c889b52
+begin 
+	w = 3
+	g = 3.3
+	f(t) = 3.3 * sin.(3 * t)
+
+	function Fluctuations!(df, u, p, t)
+		df[1] = u[2]
+		df[2] = -w * u[1] - g * u[2] - f(t)
+	end
+
+	prob = ODEProblem(Fluctuations!, u0, spanT)
+	sol = solve(prob, dtmax=stepT)
+
+	X = [u[1] for u in sol.u]
+	Y = [u[2] for u in sol.u]
+
+	plt01 = plot(sol, 
+				dpi=500,
+				xlabel="Время (s)", 
+				ylabel="x, y", 
+				legend=false)
+	savefig(plt01, "artifacts/JL.lab04-030.png")
+
+	plt02 = plot(X, Y, 
+				dpi=500,
+				xlabel="x", 
+				ylabel="y", 
+				legend=false)
+	savefig(plt02, "artifacts/JL.lab04-031.png")
+
+	println("Success!")
 end
 
-# ╔═╡ fff30253-2eac-4e95-8eb9-fe883926658d
+# ╔═╡ 980fc5c9-e58a-4eba-bbf2-77b60e0bb41f
+# ╠═╡ disabled = true
+#=╠═╡
+begin 
+	w = 0.3
+	g = 3
 
+	function Fluctuations!(df, u, p, t)
+		df[1] = u[2]
+		df[2] = -w * u[1] - g * u[2]
+	end
 
-# ╔═╡ 249c7147-742f-4c1e-9a8d-60bd7d8f8511
+	prob = ODEProblem(Fluctuations!, u0, spanT)
+	sol = solve(prob, dtmax=stepT)
 
+	X = [u[1] for u in sol.u]
+	Y = [u[2] for u in sol.u]
 
-# ╔═╡ 6be4097d-2298-4c55-b17d-198224c3ec6b
+	plt01 = plot(sol, 
+				dpi=500,
+				xlabel="Время (s)", 
+				ylabel="x, y", 
+				legend=false)
+	savefig(plt01, "artifacts/JL.lab04-020.png")
 
+	plt02 = plot(X, Y, 
+				dpi=500,
+				xlabel="x", 
+				ylabel="y", 
+				legend=false)
+	savefig(plt02, "artifacts/JL.lab04-021.png")
 
-# ╔═╡ db49efac-4dbc-4c5a-a26c-21fc1c883a68
-
-
-# ╔═╡ 958589c9-2af5-4d27-88cd-e4170b8013af
-
-
-# ╔═╡ 1a7543b8-303d-46b8-bbe4-e79e213488b6
-
-
-# ╔═╡ edcb4dac-72bc-4bdd-b90f-d82ca7c74844
-
-
-# ╔═╡ 7f188f7c-81ed-4bae-a687-b00fe0f12299
-
-
-# ╔═╡ 1578f4b2-1db2-436f-adff-bb0148eb9833
-
-
-# ╔═╡ a93500ac-d1c3-4a6d-b45c-71bdfb9798f3
-
+	println("Success!")
+end
+  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -102,7 +147,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.5"
 manifest_format = "2.0"
-project_hash = "c541d448f1b34e95fe3e2b5581ebf24967d64afe"
+project_hash = "e449c515996f8a7e546c555e19b18897fb3e6e5e"
 
 [[deps.Adapt]]
 deps = ["LinearAlgebra", "Requires"]
@@ -806,9 +851,9 @@ uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[deps.LinearSolve]]
 deps = ["ArrayInterface", "DocStringExtensions", "FastLapackInterface", "GPUArraysCore", "IterativeSolvers", "KLU", "Krylov", "KrylovKit", "LinearAlgebra", "Preferences", "RecursiveFactorization", "Reexport", "SciMLBase", "SciMLOperators", "Setfield", "SnoopPrecompile", "SparseArrays", "Sparspak", "SuiteSparse", "UnPack"]
-git-tree-sha1 = "d1fce810e9a4213607f0182cf25ffd6ce13e19b6"
+git-tree-sha1 = "fd65db5fff7238ba4c0b7a61de7e81748d73fa14"
 uuid = "7ed4a6bd-45f5-4d41-b270-4a48e9bafcae"
-version = "1.37.0"
+version = "1.38.0"
 
 [[deps.LogExpFunctions]]
 deps = ["ChainRulesCore", "ChangesOfVariables", "DocStringExtensions", "InverseFunctions", "IrrationalConstants", "LinearAlgebra"]
@@ -1194,9 +1239,9 @@ version = "0.1.3"
 
 [[deps.SciMLOperators]]
 deps = ["ArrayInterface", "DocStringExtensions", "Lazy", "LinearAlgebra", "Setfield", "SparseArrays", "StaticArraysCore", "Tricks"]
-git-tree-sha1 = "8419114acbba861ac49e1ab2750bae5c5eda35c4"
+git-tree-sha1 = "e61e48ef909375203092a6e83508c8416df55a83"
 uuid = "c0aeaf25-5076-4817-a8d5-81caf7dfa961"
-version = "0.1.22"
+version = "0.2.0"
 
 [[deps.Scratch]]
 deps = ["Dates"]
@@ -1712,21 +1757,12 @@ version = "1.4.1+0"
 """
 
 # ╔═╡ Cell order:
-# ╠═da93b7f0-ba99-11ed-10bc-cb991e65b30b
-# ╠═30e58007-626a-4b41-9927-d43e3015d722
-# ╠═987a2499-55ac-4a62-8210-fe6c17fda87c
-# ╠═e7611d43-3d4e-4b8c-97c6-7c8e038d1750
-# ╠═a12a2350-6478-4b41-b55d-e942bf0f1442
-# ╠═f162ba9c-7ca1-46bb-b504-b4b35b045b8c
-# ╠═fff30253-2eac-4e95-8eb9-fe883926658d
-# ╠═249c7147-742f-4c1e-9a8d-60bd7d8f8511
-# ╠═6be4097d-2298-4c55-b17d-198224c3ec6b
-# ╠═db49efac-4dbc-4c5a-a26c-21fc1c883a68
-# ╠═958589c9-2af5-4d27-88cd-e4170b8013af
-# ╠═1a7543b8-303d-46b8-bbe4-e79e213488b6
-# ╠═edcb4dac-72bc-4bdd-b90f-d82ca7c74844
-# ╠═7f188f7c-81ed-4bae-a687-b00fe0f12299
-# ╠═1578f4b2-1db2-436f-adff-bb0148eb9833
 # ╠═a93500ac-d1c3-4a6d-b45c-71bdfb9798f3
+# ╠═6bfebebb-d9be-48aa-b8c0-0dfbc7e20689
+# ╠═e6c105f0-698e-4f46-afae-821086479a2e
+# ╠═e07b089a-56ab-4025-9578-0dc293ce3872
+# ╠═1f20f675-2c90-467f-b122-0b193710e3bc
+# ╠═980fc5c9-e58a-4eba-bbf2-77b60e0bb41f
+# ╠═cc38a72f-23da-4299-80df-d1444c889b52
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
