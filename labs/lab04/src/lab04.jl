@@ -39,20 +39,20 @@ end
 
 # ╔═╡ a12a2350-6478-4b41-b55d-e942bf0f1442
 plot(sol,
-	title="Без затуханий и без действий внешней силы",
 	dpi=500,
 	xlabel="Время (s)",
-	ylabel="x, y",)
+	ylabel="x, y",
+	legend=false)
 
 # ╔═╡ f162ba9c-7ca1-46bb-b504-b4b35b045b8c
 begin
 	X = [u[1] for u in sol.u]
 	Y = [u[2] for u in sol.u]
 	plot(X, Y,
-		title="Без затуханий и без действий внешней силы",
 		dpi=500,
 		xlabel="x",
-		ylabel="y",)
+		ylabel="y",
+		legend=false)
 end
 
 # ╔═╡ fff30253-2eac-4e95-8eb9-fe883926658d
