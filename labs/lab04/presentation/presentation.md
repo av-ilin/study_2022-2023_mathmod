@@ -1,8 +1,8 @@
 ---
 ## Front matter
 lang: ru-RU
-title: Лабораторная работа №3
-subtitle: Модель боевых действий
+title: Лабораторная работа №4
+subtitle: Модель гармонических колебаний
 author:
     - Ильин А.В.
 institute:
