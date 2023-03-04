@@ -31,12 +31,12 @@ end
 begin 
 	w = 3.3
 
-	function Fluctuations01!(df, u, p, t)
+	function Fluctuations!(df, u, p, t)
 		df[1] = u[2]
 		df[2] = -w * u[1]
 	end
 
-	prob = ODEProblem(Fluctuations01!, u0, spanT)
+	prob = ODEProblem(Fluctuations!, u0, spanT)
 	sol = solve(prob, dtmax=stepT)
 
 	X = [u[1] for u in sol.u]
@@ -61,6 +61,8 @@ end
   ╠═╡ =#
 
 # ╔═╡ cc38a72f-23da-4299-80df-d1444c889b52
+# ╠═╡ disabled = true
+#=╠═╡
 begin 
 	w = 3
 	g = 3.3
@@ -93,6 +95,7 @@ begin
 
 	println("Success!")
 end
+  ╠═╡ =#
 
 # ╔═╡ 980fc5c9-e58a-4eba-bbf2-77b60e0bb41f
 # ╠═╡ disabled = true
