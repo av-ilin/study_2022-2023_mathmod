@@ -16,6 +16,8 @@ begin
 	const b = 0.048
 	const c = 0.76
 	const d = 0.038
+	const x0 = 7;
+	const y0 = 29;
 	const t = (0, 50)
 end
 
@@ -61,7 +63,7 @@ end
 # ╠═╡ disabled = true
 #=╠═╡
 begin 
-	u0 = [7, 29]
+	u0 = [x0, y0]
 	prob = ODEProblem(HunterPray!, u0, t)
 	sol = solve(prob, dtmax=0.05)
 
