@@ -12,5 +12,5 @@ initial equation
 equation
   der(x) = -a * x + b * x * y;
   der(y) = c * y - d * x * y;
-  annotation(experiment(StartTime=0, StopTime=70, Interval = 0.05));
+  annotation(experiment(StartTime=0, StopTime=50, Interval = 0.05));
 end lab05_01;
