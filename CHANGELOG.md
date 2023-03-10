@@ -1,3 +1,10 @@
+# 1.0.5 (2023-03-04)
+
+## Features:
+
+-   Added lab05
+-   Added presentation
+
 # 1.0.4 (2023-03-04)
 
 ## Features:
