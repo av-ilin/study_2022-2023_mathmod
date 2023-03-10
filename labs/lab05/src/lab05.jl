@@ -10,22 +10,24 @@ using Plots
 # ╔═╡ 6bfebebb-d9be-48aa-b8c0-0dfbc7e20689
 using DifferentialEquations
 
-# ╔═╡ e6c105f0-698e-4f46-afae-821086479a2e
+# ╔═╡ 6bc48b80-2adb-4814-9af6-3a80a50665f1
 begin
-	const a = 0.81
+	const a = 0.810
 	const b = 0.048
-	const c = 0.76
+	const c = 0.760
 	const d = 0.038
+	const x0 = 7
+	const y0 = 29
 	const t = (0, 50)
 end
 
-# ╔═╡ e07b089a-56ab-4025-9578-0dc293ce3872
+# ╔═╡ 81e1f3c2-f7d4-42f8-8989-cdcf179f66b0
 function HunterPray!(du, u, p, t)
-    du[1] = -a * u[1] + b * u[1] * u[2]
-    du[2] = c * u[2] - d * u[1] * u[2]
+	du[1] = -a * u[1] + b * u[1] * u[2]
+	du[2] = c * u[2] - d * u[1] * u[2]
 end
 
-# ╔═╡ 5139bac0-b944-48c8-8a74-253530032a02
+# ╔═╡ 03303aa8-141d-4015-bd04-a7ca41834a99
 # ╠═╡ disabled = true
 #=╠═╡
 begin 
@@ -38,30 +40,30 @@ begin
 
 	plt01 = plot(sol, 
 				dpi=500,
-				plot_title="Хищник-жертва",
+				plot_title = "Хищник-жертва",
 				xlabel="Время (s)", 
-				ylabel="x, y",
-				label=["x — хищники" "y — жертвы"])
+				ylabel="x, y", 
+				label=["x - хищники" "y - жертва"])
 	savefig(plt01, "artifacts/JL.lab05_02-1.png")
 
 	plt02 = scatter(X, Y, 
-					dpi=500,
-					plot_title="Хищник-жертва",
-					xlabel="x", 
-					ylabel="y", 
-					label="Зависимость хищников (x) от жертв (y)")
+				dpi=500,
+				plot_title = "Хищник-жертва",
+				xlabel="x", 
+				ylabel="y", 
+				label="Зависимость x (хищники) от y (жертва)")
 	savefig(plt02, "artifacts/JL.lab05_02-2.png")
-
 
 	println("Success!")
 end
+
   ╠═╡ =#
 
-# ╔═╡ 1f20f675-2c90-467f-b122-0b193710e3bc
+# ╔═╡ 84e62242-f756-472b-973f-6604cf7c84d5
 # ╠═╡ disabled = true
 #=╠═╡
 begin 
-	u0 = [7, 29]
+	u0 = [x0, y0]
 	prob = ODEProblem(HunterPray!, u0, t)
 	sol = solve(prob, dtmax=0.05)
 
@@ -70,18 +72,18 @@ begin
 
 	plt01 = plot(sol, 
 				dpi=500,
-				plot_title="Хищник-жертва",
+				plot_title = "Хищник-жертва",
 				xlabel="Время (s)", 
-				ylabel="x, y",
-				label=["x — хищники" "y — жертвы"])
+				ylabel="x, y", 
+				label=["x - хищники" "y - жертва"])
 	savefig(plt01, "artifacts/JL.lab05_01-1.png")
 
 	plt02 = plot(X, Y, 
 				dpi=500,
-				plot_title="Хищник-жертва",
+				plot_title = "Хищник-жертва",
 				xlabel="x", 
 				ylabel="y", 
-				label="Зависимость хищников (x) от жертв (y)")
+				label="Зависимость x (хищники) от y (жертва)")
 	savefig(plt02, "artifacts/JL.lab05_01-2.png")
 
 	println("Success!")
@@ -1718,9 +1720,9 @@ version = "1.4.1+0"
 # ╔═╡ Cell order:
 # ╠═a93500ac-d1c3-4a6d-b45c-71bdfb9798f3
 # ╠═6bfebebb-d9be-48aa-b8c0-0dfbc7e20689
-# ╠═e6c105f0-698e-4f46-afae-821086479a2e
-# ╠═e07b089a-56ab-4025-9578-0dc293ce3872
-# ╠═1f20f675-2c90-467f-b122-0b193710e3bc
-# ╠═5139bac0-b944-48c8-8a74-253530032a02
+# ╠═6bc48b80-2adb-4814-9af6-3a80a50665f1
+# ╠═81e1f3c2-f7d4-42f8-8989-cdcf179f66b0
+# ╠═84e62242-f756-472b-973f-6604cf7c84d5
+# ╠═03303aa8-141d-4015-bd04-a7ca41834a99
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
