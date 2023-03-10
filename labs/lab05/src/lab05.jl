@@ -16,6 +16,7 @@ begin
 	const b = 0.048
 	const c = 0.76
 	const d = 0.038
+	const t = (0, 50)
 end
 
 # ╔═╡ e07b089a-56ab-4025-9578-0dc293ce3872
@@ -24,11 +25,40 @@ function HunterPray!(du, u, p, t)
     du[2] = c * u[2] - d * u[1] * u[2]
 end
 
+# ╔═╡ 5139bac0-b944-48c8-8a74-253530032a02
+# ╠═╡ disabled = true
+#=╠═╡
+begin 
+	u0 = [c/d, a/b]
+	prob = ODEProblem(HunterPray!, u0, t)
+	sol = solve(prob, dtmax=0.05)
+
+	X = [u[1] for u in sol.u]
+	Y = [u[2] for u in sol.u]
+
+	plt01 = plot(sol, 
+				dpi=500,
+				xlabel="Время (s)", 
+				ylabel="x, y", 
+				legend=false)
+	savefig(plt01, "artifacts/JL.lab05_02-1.png")
+
+	plt02 = plot(X, Y, 
+				dpi=500,
+				xlabel="x", 
+				ylabel="y", 
+				legend=false)
+	savefig(plt02, "artifacts/JL.lab05_02-2.png")
+
+	println("Success!")
+end
+  ╠═╡ =#
+
 # ╔═╡ 1f20f675-2c90-467f-b122-0b193710e3bc
+# ╠═╡ disabled = true
+#=╠═╡
 begin 
 	u0 = [7, 29]
-	t = (0, 70)
-
 	prob = ODEProblem(HunterPray!, u0, t)
 	sol = solve(prob, dtmax=0.05)
 
@@ -52,6 +82,7 @@ begin
 	println("Success!")
 end
 
+  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1685,5 +1716,6 @@ version = "1.4.1+0"
 # ╠═e6c105f0-698e-4f46-afae-821086479a2e
 # ╠═e07b089a-56ab-4025-9578-0dc293ce3872
 # ╠═1f20f675-2c90-467f-b122-0b193710e3bc
+# ╠═5139bac0-b944-48c8-8a74-253530032a02
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
