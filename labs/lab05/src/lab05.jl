@@ -38,17 +38,20 @@ begin
 
 	plt01 = plot(sol, 
 				dpi=500,
+				plot_title="Хищник-жертва",
 				xlabel="Время (s)", 
-				ylabel="x, y", 
-				legend=false)
+				ylabel="x, y",
+				label=["x — хищники" "y — жертвы"])
 	savefig(plt01, "artifacts/JL.lab05_02-1.png")
 
-	plt02 = plot(X, Y, 
-				dpi=500,
-				xlabel="x", 
-				ylabel="y", 
-				legend=false)
+	plt02 = scatter(X, Y, 
+					dpi=500,
+					plot_title="Хищник-жертва",
+					xlabel="x", 
+					ylabel="y", 
+					label="Зависимость хищников (x) от жертв (y)")
 	savefig(plt02, "artifacts/JL.lab05_02-2.png")
+
 
 	println("Success!")
 end
@@ -67,16 +70,18 @@ begin
 
 	plt01 = plot(sol, 
 				dpi=500,
+				plot_title="Хищник-жертва",
 				xlabel="Время (s)", 
-				ylabel="x, y", 
-				legend=false)
+				ylabel="x, y",
+				label=["x — хищники" "y — жертвы"])
 	savefig(plt01, "artifacts/JL.lab05_01-1.png")
 
 	plt02 = plot(X, Y, 
 				dpi=500,
+				plot_title="Хищник-жертва",
 				xlabel="x", 
 				ylabel="y", 
-				legend=false)
+				label="Зависимость хищников (x) от жертв (y)")
 	savefig(plt02, "artifacts/JL.lab05_01-2.png")
 
 	println("Success!")
