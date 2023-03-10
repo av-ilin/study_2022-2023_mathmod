@@ -19,20 +19,18 @@ begin
 end
 
 # ╔═╡ e07b089a-56ab-4025-9578-0dc293ce3872
-begin
-	function F!(du, u, p, t)
-        du[1] = -a * u[1] + b * u[1] * u[2]
-        du[2] = c * u[2] - d * u[1] * u[2]
-    end
+function HunterPray!(du, u, p, t)
+    du[1] = -a * u[1] + b * u[1] * u[2]
+    du[2] = c * u[2] - d * u[1] * u[2]
 end
 
 # ╔═╡ 1f20f675-2c90-467f-b122-0b193710e3bc
 begin 
 	u0 = [7, 29]
-	t = (0, 100)
+	t = (0, 70)
 
-	prob = ODEProblem(Fluctuations!, u0, t)
-	sol = solve(prob, dtmax=stepT)
+	prob = ODEProblem(HunterPray!, u0, t)
+	sol = solve(prob, dtmax=0.05)
 
 	X = [u[1] for u in sol.u]
 	Y = [u[2] for u in sol.u]
@@ -49,7 +47,7 @@ begin
 				xlabel="x", 
 				ylabel="y", 
 				legend=false)
-	savefig(plt02, "artifacts/JL.lab05_01-1.png")
+	savefig(plt02, "artifacts/JL.lab05_01-2.png")
 
 	println("Success!")
 end
@@ -72,7 +70,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.5"
 manifest_format = "2.0"
-project_hash = "e449c515996f8a7e546c555e19b18897fb3e6e5e"
+project_hash = "c541d448f1b34e95fe3e2b5581ebf24967d64afe"
 
 [[deps.Adapt]]
 deps = ["LinearAlgebra", "Requires"]
@@ -1687,7 +1685,5 @@ version = "1.4.1+0"
 # ╠═e6c105f0-698e-4f46-afae-821086479a2e
 # ╠═e07b089a-56ab-4025-9578-0dc293ce3872
 # ╠═1f20f675-2c90-467f-b122-0b193710e3bc
-# ╠═980fc5c9-e58a-4eba-bbf2-77b60e0bb41f
-# ╠═cc38a72f-23da-4299-80df-d1444c889b52
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
