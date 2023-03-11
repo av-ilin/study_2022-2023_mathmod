@@ -1,9 +1,10 @@
-# 1.0.5 (2023-03-04)
+# 1.0.5 (2023-03-11)
 
 ## Features:
 
 -   Added lab05
 -   Added presentation
+-   Upd project (added stage03)
 
 # 1.0.4 (2023-03-04)
 
