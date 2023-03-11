@@ -73,6 +73,8 @@ begin
 	Plots.plot!(fig_1[1], X, find_Yₜ(X, 0.0, 1), color=:red, label="Гармоника №1")
 	Plots.plot!(fig_1[1], X, find_Yₜ(X, 0.0, 2), color=:blue, label="Гармоника №2")
 	Plots.plot!(fig_1[1], X, find_Yₜ(X, 0.0, 3), color=:green, label="Гармоника №3")
+
+	savefig(fig_1, "artifacts/plot01.png")
 end
 
 # ╔═╡ 9ca72cb3-3ac5-4422-8ee4-efd0231b59f2
@@ -93,6 +95,8 @@ begin
 	Plots.plot!(fig_2[1], X, find_Yₜ(X, 0.0, 1), color=:red, label="Гармоника №1")
 	Plots.plot!(fig_2[2], X, find_Yₜ(X, 0.0, 2), color=:blue, label="Гармоника №2")
 	Plots.plot!(fig_2[3], X, find_Yₜ(X, 0.0, 3), color=:green, label="Гармоника №3")
+
+	Plots.savefig(fig_2, "artifacts/plot02.png")
 end
 
 # ╔═╡ 51b3d675-33a3-408b-a7e0-4e92d250f5e3
@@ -116,11 +120,13 @@ begin
 	Plots.scatter!(fig_3[2], X, find_Yₜ(X, 0.0, 2), color=:blue, label="", markerstrokewidth=0.4, markersize=4)
 	Plots.plot!(fig_3[3], X, find_Yₜ(X, 0.0, 3), color=:green, label="Гармоника №3")
 	Plots.scatter!(fig_3[3], X, find_Yₜ(X, 0.0, 3), color=:green, label="", markerstrokewidth=0.4, markersize=4)
+
+	Plots.savefig(fig_3, "artifacts/plot03.png")
 end
 
 # ╔═╡ f9db5e7e-78c0-46fa-a9e1-fd5dc348ab01
 begin
-	anim = Plots.@animate for time in 0.0:0.5:N
+	anim = Plots.@animate for time in 0.0:0.2:N
 		fig = Plots.plot(
 			layout=(3, 1),
 			dpi=150,
@@ -147,12 +153,12 @@ begin
 		Plots.scatter!(fig[3], X, Y_const, alpha=0.25, color=:grey, markerstrokewidth=0, label="" )
 		Plots.scatter!(fig[3], X, find_Yₜ(X, time, 3), color=:green, label="", markerstrokewidth=0.4, markersize=4)
 	end
-	Plots.gif(anim, fps=60)
+	Plots.gif(anim, fps=60, "artifacts/anim01.gif")
 end
 
 # ╔═╡ d50712cb-c71d-4e14-bbe2-8cfa507e39d8
 begin
-	anim1 = Plots.@animate for time in 0.0:0.5:N+1
+	anim1 = Plots.@animate for time in 0.0:0.2:N+1
 		fig = Plots.plot(
 			layout=(3, 1),
 			dpi=150,
@@ -179,7 +185,7 @@ begin
 		Plots.scatter!(fig[3], X, Y_const, alpha=0.8, color=:grey, markerstrokewidth=0, label="" )
 		Plots.scatter!(fig[3], find_new_X(X, find_Yₜ(X, time, 3)), Y_const, color=:green, label="", markerstrokewidth=0.4, markersize=4)
 	end
-	Plots.gif(anim1, fps=60)
+	Plots.gif(anim1, fps=60, "artifacts/anim02.gif")
 end
 
 # ╔═╡ Cell order:
