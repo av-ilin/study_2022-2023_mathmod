@@ -74,7 +74,7 @@ begin
 	Plots.plot!(fig_1[1], X, find_Yₜ(X, 0.0, 2), color=:blue, label="Гармоника №2")
 	Plots.plot!(fig_1[1], X, find_Yₜ(X, 0.0, 3), color=:green, label="Гармоника №3")
 
-	savefig(fig_1, "artifacts/plot01.png")
+	Plots.savefig(fig_1, "artifacts/plot01.png")
 end
 
 # ╔═╡ 9ca72cb3-3ac5-4422-8ee4-efd0231b59f2
