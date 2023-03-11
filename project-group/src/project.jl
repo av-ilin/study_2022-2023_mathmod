@@ -57,7 +57,7 @@ end
 # ╔═╡ 71dda8fb-7995-4eb3-80af-9e7a9776c6d5
 begin
 	fig_1 = Plots.plot(
-		dpi=150,
+		dpi=512,
 		grid=:xy,
 		gridcolor=:black,
 		gridwidth=1,
@@ -79,7 +79,7 @@ end
 begin
 	fig_2 = Plots.plot(
 		layout=(3, 1),
-		dpi=150,
+		dpi=512,
 		grid=:xy,
 		gridcolor=:black,
 		gridwidth=1,
@@ -101,7 +101,7 @@ end
 begin
 	fig_3 = Plots.plot(
 		layout=(3, 1),
-		dpi=150,
+		dpi=512,
 		grid=:xy,
 		gridcolor=:black,
 		gridwidth=1,
@@ -124,10 +124,10 @@ end
 
 # ╔═╡ f9db5e7e-78c0-46fa-a9e1-fd5dc348ab01
 begin
-	anim = Plots.@animate for time in 0.0:0.1:N
+	anim = Plots.@animate for time in 0.0:0.5:N
 		fig = Plots.plot(
 			layout=(3, 1),
-			dpi=150,
+			dpi=512,
 			grid=:xy,
 			gridcolor=:black,
 			gridwidth=1,
@@ -156,10 +156,10 @@ end
 
 # ╔═╡ d50712cb-c71d-4e14-bbe2-8cfa507e39d8
 begin
-	anim1 = Plots.@animate for time in 0.0:0.1:N+1
+	anim1 = Plots.@animate for time in 0.0:0.5:N+1
 		fig = Plots.plot(
 			layout=(3, 1),
-			dpi=150,
+			dpi=512,
 			grid=:xy,
 			gridcolor=:black,
 			gridwidth=1,
