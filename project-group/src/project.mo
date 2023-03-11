@@ -10,11 +10,11 @@ model project
   constant Real p_l = (l * pi)/((N + 1) * d);
   constant Real omega_0 = sqrt(k/m);
   constant Real omega_l = 2 * omega_0 * sin((l * pi)/(2 * (N + 1)));
-  Real t = time;
+  constant Real t = 0.0;
   Real x;
   Real y;
 equation
   der(x) = 1;
-  y = (A * cos(p_l * x) + B * sin(p_l * x)) * cos(omega_l * t); // * t);
-  annotation(experiment(StartTime=0, StopTime=51, Interval = 1));
+  y = (A * cos(p_l * x) + B * sin(p_l * x)) * cos(omega_l * t);
+  annotation(experiment(StartTime=0, StopTime=51, Interval = 0.1));
 end project;
