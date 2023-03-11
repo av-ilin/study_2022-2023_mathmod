@@ -127,7 +127,7 @@ begin
 	anim = Plots.@animate for time in 0.0:0.5:N
 		fig = Plots.plot(
 			layout=(3, 1),
-			dpi=256,
+			dpi=128,
 			grid=:xy,
 			gridcolor=:black,
 			gridwidth=1,
@@ -159,7 +159,7 @@ begin
 	anim1 = Plots.@animate for time in 0.0:0.5:N+1
 		fig = Plots.plot(
 			layout=(3, 1),
-			dpi=256,
+			dpi=128,
 			grid=:xy,
 			gridcolor=:black,
 			gridwidth=1,
