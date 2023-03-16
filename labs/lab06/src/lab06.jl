@@ -12,42 +12,59 @@ using DifferentialEquations
 
 # ╔═╡ 0474aa18-aba3-433d-90cb-dc654032f0f4
 begin
-	const alpha = 0.01
-	const beta = 0.02
+	const alpha = 0.75
+	const beta = 0.25
+	const I_crit = 50
+	
 	const N = 15089
     const I0 = 95
     const R0 = 45
     const S0 = N - I0 - R0
+	
+	const t = (0, 30)
+	u0 = [S0, I0, R0]
 end
 
 # ╔═╡ b4be6d4c-9b8a-4e81-a885-860daa9102d1
 function SIR01!(du, u, p, t)
 	du[1] = 0
 	du[2] = - beta * u[2]
-    du[3] = - beta * u[2]
+    du[3] = beta * u[2]
 end
 
 # ╔═╡ c19207ba-c988-424a-a449-b9ca8a801ac6
 function SIR02!(du, u, p, t)
 	du[1] = - alpha * u[1]
 	du[2] = alpha * u[1] - beta * u[2]
-    du[3] = - beta * u[2]
+    du[3] = beta * u[2]
+end
+
+# ╔═╡ 79ce95d9-b31d-4481-ab61-c20d64959707
+function SIR!(du, u, p, t)
+	if u[2] > I_crit
+		du[1] = - alpha * u[1]
+		du[2] = alpha * u[1] - beta * u[2]
+	else
+		du[1] = 0
+		du[2] = - beta * u[2]
+	end
+    du[3] = beta * u[2]
 end
 
 # ╔═╡ 561aeb87-b53a-4b21-a2d0-fd3612acf648
 begin
-    u0 = [S0, I0, R0]
-	prob = ODEProblem(SIR01!, u0, t)
+	prob = ODEProblem(SIR!, u0, t)
 	sol = solve(prob)
 
-	plt = scatter(sol,
+	plt = plot(sol,
                   dpi=500,
+				  size=(800, 400),
                   plot_title = "Модель заражения SIR",
                   xlabel="t", 
                   ylabel="SIR", 
-                  label=["S(t)", "I(t)", "R(t)"])
-	savefig(plt, "artifacts/JL.lab06_01.png")
-
+                  label=["S(t)" "I(t)" "R(t)"])
+	
+	savefig(plt, "artifacts/JL.lab06.png")
 	println("Success!")
 end
 
@@ -1683,6 +1700,7 @@ version = "1.4.1+0"
 # ╠═0474aa18-aba3-433d-90cb-dc654032f0f4
 # ╠═b4be6d4c-9b8a-4e81-a885-860daa9102d1
 # ╠═c19207ba-c988-424a-a449-b9ca8a801ac6
+# ╠═79ce95d9-b31d-4481-ab61-c20d64959707
 # ╠═561aeb87-b53a-4b21-a2d0-fd3612acf648
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
