@@ -15,21 +15,40 @@ begin
 	const alpha = 0.01
 	const beta = 0.02
 	const N = 15089
+    const I0 = 95
+    const R0 = 45
+    const S0 = N - I0 - R0
 end
 
 # ╔═╡ b4be6d4c-9b8a-4e81-a885-860daa9102d1
-begin
+function SIR01!(du, u, p, t)
+	du[1] = 0
+	du[2] = - beta * u[2]
+    du[3] = - beta * u[2]
 end
 
 # ╔═╡ c19207ba-c988-424a-a449-b9ca8a801ac6
-# ╠═╡ disabled = true
-#=╠═╡
-begin
+function SIR02!(du, u, p, t)
+	du[1] = - alpha * u[1]
+	du[2] = alpha * u[1] - beta * u[2]
+    du[3] = - beta * u[2]
 end
-  ╠═╡ =#
 
 # ╔═╡ 561aeb87-b53a-4b21-a2d0-fd3612acf648
 begin
+    u0 = [S0, I0, R0]
+	prob = ODEProblem(SIR01!, u0, t)
+	sol = solve(prob)
+
+	plt = scatter(sol,
+                  dpi=500,
+                  plot_title = "Модель заражения SIR",
+                  xlabel="t", 
+                  ylabel="SIR", 
+                  label=["S(t)", "I(t)", "R(t)"])
+	savefig(plt, "artifacts/JL.lab06_01.png")
+
+	println("Success!")
 end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
