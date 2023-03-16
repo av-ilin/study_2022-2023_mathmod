@@ -11,7 +11,26 @@ using Plots
 using DifferentialEquations
 
 # ╔═╡ 0474aa18-aba3-433d-90cb-dc654032f0f4
+begin
+	const alpha = 0.01
+	const beta = 0.02
+	const N = 15089
+end
 
+# ╔═╡ b4be6d4c-9b8a-4e81-a885-860daa9102d1
+begin
+end
+
+# ╔═╡ c19207ba-c988-424a-a449-b9ca8a801ac6
+# ╠═╡ disabled = true
+#=╠═╡
+begin
+end
+  ╠═╡ =#
+
+# ╔═╡ 561aeb87-b53a-4b21-a2d0-fd3612acf648
+begin
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1643,5 +1662,8 @@ version = "1.4.1+0"
 # ╠═a93500ac-d1c3-4a6d-b45c-71bdfb9798f3
 # ╠═6bfebebb-d9be-48aa-b8c0-0dfbc7e20689
 # ╠═0474aa18-aba3-433d-90cb-dc654032f0f4
+# ╠═b4be6d4c-9b8a-4e81-a885-860daa9102d1
+# ╠═c19207ba-c988-424a-a449-b9ca8a801ac6
+# ╠═561aeb87-b53a-4b21-a2d0-fd3612acf648
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
