@@ -14,7 +14,7 @@ using DifferentialEquations
 begin
 	const alpha = 0.75
 	const beta = 0.25
-	const I_crit = 50
+	const I_crit = 64
 	
 	const N = 15089
     const I0 = 95
