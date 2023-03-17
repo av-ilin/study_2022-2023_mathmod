@@ -3,6 +3,7 @@ model lab06
   constant Real beta = 0.25;
   constant Integer N = 15089;
   constant Integer I_crt = 64;
+  // constant Integer I_crt = 128;
   
   Real t = time;
   Real S(t);
