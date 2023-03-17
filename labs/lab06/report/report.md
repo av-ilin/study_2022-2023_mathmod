@@ -95,7 +95,6 @@ header-includes:
 
 $$
 \frac{dS}{dt} =
-
 \begin{cases}
 -\alpha S,\ если\ I(t) > I^* \\
 0,\ если\ I(t) \leq I^* \\
@@ -106,7 +105,6 @@ $$
 
 $$
 \frac{dI}{dt} =
-
 \begin{cases}
 \alpha S - \beta I,\ если\ I(t) > I^* \\
 - \beta I,\ если\ I(t) \leq I^* \\
