@@ -10,23 +10,23 @@ using Plots
 # ╔═╡ 6bfebebb-d9be-48aa-b8c0-0dfbc7e20689
 using DifferentialEquations
 
-# ╔═╡ 0474aa18-aba3-433d-90cb-dc654032f0f4
+# ╔═╡ 88805c15-fdc3-4cfe-a055-4d23a6785053
 begin
-	const alpha = 0.75
-	const beta = 0.25
+	const alpha = 0.30
+	const beta = 0.70
 	const I_crit = 64
 	# const I_crit = 128
-	
+
 	const N = 15089
-    const I0 = 95
-    const R0 = 45
-    const S0 = N - I0 - R0
-	
+	const I0 = 95
+	const R0 = 45
+	const S0 = N - I0 - R0
+
 	const t = (0, 30)
 	u0 = [S0, I0, R0]
 end
 
-# ╔═╡ 79ce95d9-b31d-4481-ab61-c20d64959707
+# ╔═╡ a40ae8d7-1ab1-49d4-b216-a45197b7fd4a
 function SIR!(du, u, p, t)
 	if u[2] > I_crit
 		du[1] = - alpha * u[1]
@@ -35,25 +35,26 @@ function SIR!(du, u, p, t)
 		du[1] = 0
 		du[2] = - beta * u[2]
 	end
-    du[3] = beta * u[2]
+	du[3] = beta * u[2]
 end
 
-# ╔═╡ 561aeb87-b53a-4b21-a2d0-fd3612acf648
+# ╔═╡ 713e9c46-2d98-4d26-a60d-a0e33dd77806
 begin
 	prob = ODEProblem(SIR!, u0, t)
 	sol = solve(prob)
 
-	plt = plot(sol,
-                  dpi=500,
-				  size=(800, 400),
-                  plot_title = "Модель заражения SIR",
-                  xlabel="t", 
-                  ylabel="SIR", 
-                  label=["S(t)" "I(t)" "R(t)"])
+	plt = plot(
+		sol,
+		dpi=500, 
+		size=(1024, 512),
+		plot_title="Задача об эпидемии", 
+		xlabel="Время", 
+		ylabel="S(t), I(t), R(t)",
+		label=["S(t)" "I(t)" "R(t)"])
 
 	savefig(plt, "artifacts/JL.lab06-01.png")
 	# savefig(plt, "artifacts/JL.lab06-02.png")
-	println("Success!")
+	println("Success")
 end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -1685,8 +1686,8 @@ version = "1.4.1+0"
 # ╔═╡ Cell order:
 # ╠═a93500ac-d1c3-4a6d-b45c-71bdfb9798f3
 # ╠═6bfebebb-d9be-48aa-b8c0-0dfbc7e20689
-# ╠═0474aa18-aba3-433d-90cb-dc654032f0f4
-# ╠═79ce95d9-b31d-4481-ab61-c20d64959707
-# ╠═561aeb87-b53a-4b21-a2d0-fd3612acf648
+# ╠═88805c15-fdc3-4cfe-a055-4d23a6785053
+# ╠═a40ae8d7-1ab1-49d4-b216-a45197b7fd4a
+# ╠═713e9c46-2d98-4d26-a60d-a0e33dd77806
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
