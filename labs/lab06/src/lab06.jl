@@ -15,6 +15,7 @@ begin
 	const alpha = 0.75
 	const beta = 0.25
 	const I_crit = 64
+	# const I_crit = 128
 	
 	const N = 15089
     const I0 = 95
@@ -23,20 +24,6 @@ begin
 	
 	const t = (0, 30)
 	u0 = [S0, I0, R0]
-end
-
-# ╔═╡ b4be6d4c-9b8a-4e81-a885-860daa9102d1
-function SIR01!(du, u, p, t)
-	du[1] = 0
-	du[2] = - beta * u[2]
-    du[3] = beta * u[2]
-end
-
-# ╔═╡ c19207ba-c988-424a-a449-b9ca8a801ac6
-function SIR02!(du, u, p, t)
-	du[1] = - alpha * u[1]
-	du[2] = alpha * u[1] - beta * u[2]
-    du[3] = beta * u[2]
 end
 
 # ╔═╡ 79ce95d9-b31d-4481-ab61-c20d64959707
@@ -63,8 +50,9 @@ begin
                   xlabel="t", 
                   ylabel="SIR", 
                   label=["S(t)" "I(t)" "R(t)"])
-	
-	savefig(plt, "artifacts/JL.lab06.png")
+
+	savefig(plt, "artifacts/JL.lab06-01.png")
+	# savefig(plt, "artifacts/JL.lab06-02.png")
 	println("Success!")
 end
 
@@ -1698,8 +1686,6 @@ version = "1.4.1+0"
 # ╠═a93500ac-d1c3-4a6d-b45c-71bdfb9798f3
 # ╠═6bfebebb-d9be-48aa-b8c0-0dfbc7e20689
 # ╠═0474aa18-aba3-433d-90cb-dc654032f0f4
-# ╠═b4be6d4c-9b8a-4e81-a885-860daa9102d1
-# ╠═c19207ba-c988-424a-a449-b9ca8a801ac6
 # ╠═79ce95d9-b31d-4481-ab61-c20d64959707
 # ╠═561aeb87-b53a-4b21-a2d0-fd3612acf648
 # ╟─00000000-0000-0000-0000-000000000001
