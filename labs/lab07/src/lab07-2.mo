@@ -8,5 +8,5 @@ initial equation
     n = 12;
 equation
   der(n) = (alpha1 + alpha2 * n) * (N - n);
-  annotation(experiment(StartTime = 0, StopTime = 30, Interval = 0.05));
+  annotation(experiment(StartTime = 0, StopTime = 0.02, Interval = 0.001));
 end lab07_2;
