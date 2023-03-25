@@ -433,13 +433,13 @@ background-color: var(--r-background-color);
 <ul>
 <li>Язык программирования Julia</li>
 <li>OpenModelica</li>
-<li>Модель эпидемии (изменная модель SIR).</li>
+<li>модель распространения рекламы.</li>
 </ul>
 </section>
 <section id="цель" class="slide level2">
 <h2>Цель</h2>
 <ul>
-<li>Рассмотреть модель распространения.</li>
+<li>Рассмотреть модель распространения рекламы.</li>
 <li>Построить данную модель средствами OpenModellica и Julia.</li>
 </ul>
 </section>
@@ -448,8 +448,8 @@ background-color: var(--r-background-color);
 <p>Построить график распространения рекламы, математическая модель
 которой описывается следующим уравнением</p>
 <ol type="1">
-<li><span class="math inline">$\frac{dn}{dt} = (0.133 + 0.000033n(t))
-\dot (N - n(t))$</span></li>
+<li><span class="math inline">$\frac{dn}{dt} = (0.133 + 0.000033n(t))(N
+- n(t))$</span></li>
 <li><span class="math inline">$\frac{dn}{dt} = (0.0000132 + 0.32n(t))(N
 - n(t))$</span></li>
 <li><span class="math inline">$\frac{dn}{dt} = (0.8t +
@@ -554,8 +554,7 @@ background-color: var(--r-background-color);
 <h2>Итог</h2>
 <p>Мы улучшили практические навыки в области дифференциальных уравнений,
 улучшили навыки моделирования на Julia, а также навыки моделирования на
-OpenModelica. Изучили видоизмененную модель заражения SIR и решили при
-ее помощи задачу об эпидемии.</p>
+OpenModelica. Изучили и построили модель распространения рекламы.</p>
 </section>
 <section id="section" class="slide level2 standout">
 <h2 class="standout"></h2>
