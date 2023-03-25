@@ -12,48 +12,37 @@ using DifferentialEquations
 
 # ╔═╡ 88805c15-fdc3-4cfe-a055-4d23a6785053
 begin
-	const alpha = 0.30
-	const beta = 0.70
-	const I_crit = 64
-	# const I_crit = 128
-
 	const N = 15089
-	const I0 = 95
-	const R0 = 45
-	const S0 = N - I0 - R0
-
-	const t = (0, 30)
-	u0 = [S0, I0, R0]
+	u0 = [12]
 end
 
 # ╔═╡ a40ae8d7-1ab1-49d4-b216-a45197b7fd4a
-function SIR!(du, u, p, t)
-	if u[2] > I_crit
-		du[1] = - alpha * u[1]
-		du[2] = alpha * u[1] - beta * u[2]
-	else
-		du[1] = 0
-		du[2] = - beta * u[2]
-	end
-	du[3] = beta * u[2]
-end
+
 
 # ╔═╡ 713e9c46-2d98-4d26-a60d-a0e33dd77806
 begin
-	prob = ODEProblem(SIR!, u0, t)
+	alpha1 = 0.133
+	alpha2 = 0.000033
+	t = (0, 15)
+	u0 = [S0, I0, R0]
+
+	function AD1!(du, u, p, t)
+		du[1] = (alpha1 + alpha2 * u[1]) * (N - u[1])
+	end
+
+	prob = ODEProblem(AD1!, u0, t)
 	sol = solve(prob)
 
 	plt = plot(
 		sol,
 		dpi=500, 
 		size=(1024, 512),
-		plot_title="Задача об эпидемии", 
+		plot_title="Эффективность рекламы", 
 		xlabel="Время", 
-		ylabel="S(t), I(t), R(t)",
-		label=["S(t)" "I(t)" "R(t)"])
+		ylabel="n(t)",
+		label=["n(t) - количество заинтересованных в товаре людей"])
 
-	savefig(plt, "artifacts/JL.lab06-01.png")
-	# savefig(plt, "artifacts/JL.lab06-02.png")
+	savefig(plt, "artifacts/JL.lab07-01.png")
 	println("Success")
 end
 
