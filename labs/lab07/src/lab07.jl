@@ -46,6 +46,8 @@ end
   ╠═╡ =#
 
 # ╔═╡ c4519157-2cfa-4f78-823f-81a17a272be2
+# ╠═╡ disabled = true
+#=╠═╡
 begin
 	alpha1 = 0.0000132
 	alpha2 = 0.32
@@ -84,6 +86,7 @@ begin
 	println(max_speed)
 	println("Success")
 end
+  ╠═╡ =#
 
 # ╔═╡ 713e9c46-2d98-4d26-a60d-a0e33dd77806
 # ╠═╡ disabled = true
