@@ -3,12 +3,12 @@ model lab08_1
   constant Real M2_0 = 6 * 1e6;
 
 
-  constant Integer p_crit = 35 * 1e3;
-  constant Integer N = 31 * 1e3;
+  constant Integer p_crit = 35 * integer(1e3);
+  constant Integer N = 31 * integer(1e3);
   constant Integer q = 1;
-  constant Real p1 = 11.5 * 1e3;
+  constant Real p1 = 11.5 * integer(1e3);
   constant Integer tau1 = 18;
-  constant Real p2 = 8.7 * 1e3;
+  constant Real p2 = 8.7 * integer(1e3);
   constant Integer tau2 = 23;
 
   constant Real a1 = p_crit / (tau1 ^ 2 * p1^2 * N * q);
@@ -27,5 +27,5 @@ initial equation
 equation
   der(M1) = M1 - (b / c1) * M1 * M2 - a1 / c1 * M1 ^ 2;
   der(M2) = c2 / c1 * M2 - (b / c1) * M1 * M2 - a2 / c1 * M2 ^ 2;
-  annotation(experiment(StartTime = 0, StopTime = 30, Interval = 0.001));
+  annotation(experiment(StartTime = 0, StopTime = 15, Interval = 0.01));
 end lab08_1;
