@@ -12,110 +12,52 @@ using DifferentialEquations
 
 # ╔═╡ 88805c15-fdc3-4cfe-a055-4d23a6785053
 begin
-	const N = 1670
-	u0 = [12]
+	const M1_0 = 6.8 * 1e6;
+  	const M2_0 = 6 * 1e6;
+
+	const p_crit = 35 * 1e3;
+	const N = 31 * 1e3;
+	const q = 1;
+	const p1 = 11.5 * 1e3;
+	const tau1 = 18;
+	const p2 = 8.7 * 1e3;
+	const tau2 = 23;
+
+	const a1 = p_crit / (tau1 ^ 2 * p1^2 * N * q);
+	const a2 = p_crit / (tau2 ^ 2 * p2^2 * N * q);
+	const b = p_crit / (tau1 ^ 2 * p1^2 * tau2 ^ 2 * p2^2 * N * q);
+	const c1 = (p_crit - p1) / (tau1 * p1);
+	const c2 = (p_crit - p2) / (tau2 * p2);
+
+	u0 = [M1_0, M2_0]
+	t= (0, 150 * c1)
 end
 
-# ╔═╡ 88b7a902-4ba8-44a0-af14-cb149bc55252
-# ╠═╡ disabled = true
-#=╠═╡
+# ╔═╡ 4eb4febf-fe28-4a9c-817e-7e7348258604
 begin
-	alpha1 = 0.8
-	alpha2 = 0.15
-	t = (0, 0.4)
-
-	function AD!(du, u, p, t)
-		du[1] = (alpha1 * t + alpha2 * sin(t) * u[1]) * (N - u[1])
-	end
-
-	prob = ODEProblem(AD!, u0, t)
-	sol = solve(prob)
-
-	plt = plot(
-		sol,
-		dpi=500, 
-		size=(1024, 512),
-		plot_title="Эффективность рекламы", 
-		xlabel="Время", 
-		ylabel="n(t)",
-		label="n(t) - количество заинтересованных в товаре людей")
-
-	savefig(plt, "artifacts/JL.lab07-03.png")
-	println("Success")
-end
-  ╠═╡ =#
-
-# ╔═╡ c4519157-2cfa-4f78-823f-81a17a272be2
-# ╠═╡ disabled = true
-#=╠═╡
-begin
-	alpha1 = 0.0000132
-	alpha2 = 0.32
-	t = (0, 0.02)
-	max_speed = [-1e12, 0, 0]
-
-	function AD!(du, u, p, t)
-		du[1] = (alpha1 + alpha2 * u[1]) * (N - u[1])
-		if du[1] > max_speed[1]
-			max_speed[1] = du[1]
-			max_speed[2] = t
-			max_speed[3] = u[1]
-		end
-	end
-
-	prob = ODEProblem(AD!, u0, t)
-	sol = solve(prob)
-
-	plt = plot(
-		sol,
-		dpi=500, 
-		size=(1024, 512),
-		plot_title="Эффективность рекламы", 
-		xlabel="Время", 
-		ylabel="n(t)",
-		label="количество заинтересованных в товаре людей")
-
-	scatter!(
-		plt, 
-		[max_speed[2]], 
-		[max_speed[3]],
-		seriestype=:scatter, 
-		label="максимальное значение cкорости распространения рекламы")
+	# case = "1"; k = 0;
+	case = "2"; k = 0.00067;
 	
-	savefig(plt, "artifacts/JL.lab07-02.png")
-	println(max_speed)
-	println("Success")
-end
-  ╠═╡ =#
-
-# ╔═╡ 713e9c46-2d98-4d26-a60d-a0e33dd77806
-# ╠═╡ disabled = true
-#=╠═╡
-begin
-	alpha1 = 0.133
-	alpha2 = 0.000033
-	t = (0, 30)
-
-	function AD!(du, u, p, t)
-		du[1] = (alpha1 + alpha2 * u[1]) * (N - u[1])
+	function VS!(du, u, p, t)
+		du[1] = u[1] - (b / c1 + k) * u[1] * u[2] - a1 / c1 * u[1] ^ 2;
+  		du[2] = c2 / c1 * u[2] - (b / c1) * u[1] * u[2] - a2 / c1 * u[2] ^ 2;
 	end
 
-	prob = ODEProblem(AD!, u0, t)
+	prob = ODEProblem(VS!, u0, t)
 	sol = solve(prob)
 
 	plt = plot(
 		sol,
 		dpi=500, 
 		size=(1024, 512),
-		plot_title="Эффективность рекламы", 
-		xlabel="Время", 
-		ylabel="n(t)",
-		label="n(t) - количество заинтересованных в товаре людей")
+		plot_title="Модель конкуренции двух фирм. Случай " * case, 
+		xlabel="t / c1", 
+		ylabel="M1(t), M2(t)",
+		label=["M1 - оборотные средства предприятия #1" "M2 - оборотные средства предприятия #2"])
 
-	savefig(plt, "artifacts/JL.lab07-01.png")
+	savefig(plt, "artifacts/JL.lab08-0" * case * ".png")
 	println("Success")
 end
-  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1747,8 +1689,6 @@ version = "1.4.1+0"
 # ╠═a93500ac-d1c3-4a6d-b45c-71bdfb9798f3
 # ╠═6bfebebb-d9be-48aa-b8c0-0dfbc7e20689
 # ╠═88805c15-fdc3-4cfe-a055-4d23a6785053
-# ╠═713e9c46-2d98-4d26-a60d-a0e33dd77806
-# ╠═c4519157-2cfa-4f78-823f-81a17a272be2
-# ╠═88b7a902-4ba8-44a0-af14-cb149bc55252
+# ╠═4eb4febf-fe28-4a9c-817e-7e7348258604
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
