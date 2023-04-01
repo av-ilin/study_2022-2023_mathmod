@@ -1,15 +1,21 @@
+# 1.0.8 (2023-03-25)
+
+## Features:
+
+-   Added lab08
+
 # 1.0.7 (2023-03-25)
 
 ## Features:
 
--   Added lab05
+-   Added lab07
 -   Upd project (added stage04)
 
 # 1.0.6 (2023-03-18)
 
 ## Features:
 
--   Added lab05
+-   Added lab06
 
 # 1.0.5 (2023-03-11)
 
